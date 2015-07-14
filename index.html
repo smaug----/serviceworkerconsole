@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title></title>
+    <script>
+    </script>
+    <style>
+    </style>
+  </head>
+  <body>
+      <h3>ServiceWorkerConsole (Gecko only for now. Chromium seems to have issues with MessageEvent.source)</h3>
+    <textarea id="src" onkeyup="sendToWorker(this.value)" cols="80" rows="10"></textarea><br>
+    <textarea id="result" readonly cols="80" rows="10"></textarea>
+    <script>
+      navigator.serviceWorker.register("sw.js");
+
+      navigator.serviceWorker.onmessage = function(e) {
+        document.getElementById("result").value = e.data;
+      }
+
+      var timerID = 0;
+      function sendToWorker(val) {
+        clearTimeout(timerID);
+        timerID = setTimeout(sendToWorkerNow, 500, val)
+      }
+
+      function sendToWorkerNow(val) {
+        navigator.serviceWorker.ready.then(function(p) {
+          p.active.postMessage(val);
+        })
+      }
+    </script>
+  </body>
+</html>
