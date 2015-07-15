@@ -7,11 +7,11 @@
 })();
 
 // Hack. Apparently this should keep the ServiceWorker alive.
-(function() {
+/*(function() {
    addEventListener("install",
                     function(e) {
                       e.waitUntil(new Promise(function() {}));
                     },
                     true);
 })();
-
+*/
